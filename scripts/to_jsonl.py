@@ -14,7 +14,7 @@ parser.add_argument(
     "-o",
     default="data/heuristics_evaluation_set.jsonl",
     type=str,
-    help="Output .jsonl file. Default data/heuristics_evaluation_set.jsonl",
+    help="Output .jsonl file. Default: data/heuristics_evaluation_set.jsonl",
 )
 args = parser.parse_args()
 

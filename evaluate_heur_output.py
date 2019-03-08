@@ -1,5 +1,6 @@
 import sys
 
+
 def format_label(label):
     if label == "entailment":
         return "entailment"
@@ -44,7 +45,7 @@ for line in fi:
             else:
                 this_line_dict[label] = parts[index]
         correct_dict[parts[idIndex]] = this_line_dict
-        
+
         if this_line_dict["heuristic"] not in heuristic_list:
             heuristic_list.append(this_line_dict["heuristic"])
         if this_line_dict["subcase"] not in subcase_list:
@@ -62,11 +63,10 @@ heuristic_nonent_correct_count_dict = {}
 heuristic_nonent_incorrect_count_dict = {}
 
 
-
 for heuristic in heuristic_list:
     heuristic_ent_correct_count_dict[heuristic] = 0
     heuristic_ent_incorrect_count_dict[heuristic] = 0
-    heuristic_nonent_correct_count_dict[heuristic] = 0 
+    heuristic_nonent_correct_count_dict[heuristic] = 0
     heuristic_nonent_incorrect_count_dict[heuristic] = 0
 
 for subcase in subcase_list:
@@ -82,7 +82,7 @@ for key in correct_dict:
     heur = traits["heuristic"]
     subcase = traits["subcase"]
     template = traits["template"]
-    
+
     guess = guess_dict[key]
     correct = traits["gold_label"]
 
@@ -91,7 +91,7 @@ for key in correct_dict:
             heuristic_ent_correct_count_dict[heur] += 1
         else:
             heuristic_nonent_correct_count_dict[heur] += 1
-            
+
         subcase_correct_count_dict[subcase] += 1
         template_correct_count_dict[template] += 1
     else:
@@ -101,7 +101,7 @@ for key in correct_dict:
             heuristic_nonent_incorrect_count_dict[heur] += 1
         subcase_incorrect_count_dict[subcase] += 1
         template_incorrect_count_dict[template] += 1
-    
+
 print("Heuristic entailed results:")
 for heuristic in heuristic_list:
     correct = heuristic_ent_correct_count_dict[heuristic]
@@ -136,6 +136,3 @@ for template in template_list:
     total = correct + incorrect
     percent = correct * 1.0 / total
     print(template + ": " + str(percent))
-
-
-
