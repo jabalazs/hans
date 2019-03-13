@@ -1,4 +1,21 @@
-import sys
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "predictions",
+    metavar="predictions_path",
+    type=str,
+    help="Path to the predictions file",
+)
+parser.add_argument(
+    "--evaluation",
+    "-e",
+    default="data/heuristics_evaluation_set.txt",
+    metavar="",
+    type=str,
+    help="Path to the evaluation file",
+)
+args = parser.parse_args()
 
 
 def format_label(label):
@@ -8,12 +25,12 @@ def format_label(label):
         return "non-entailment"
 
 
-fi = open(sys.argv[1], "r")
-
+with open(args.predictions, "r") as f:
+    pred_lines = f.readlines()
 
 first = True
 guess_dict = {}
-for line in fi:
+for line in pred_lines:
     if first:
         first = False
         continue
@@ -21,7 +38,8 @@ for line in fi:
         parts = line.strip().split(",")
         guess_dict[parts[0]] = format_label(parts[1])
 
-fi = open("heuristics_evaluation_set.txt", "r")
+with open(args.evaluation, "r") as f:
+    eval_lines = f.readlines()
 
 correct_dict = {}
 first = True
@@ -30,7 +48,7 @@ heuristic_list = []
 subcase_list = []
 template_list = []
 
-for line in fi:
+for line in eval_lines:
     if first:
         labels = line.strip().split("\t")
         idIndex = labels.index("pairID")
